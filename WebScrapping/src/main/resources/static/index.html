@@ -5,39 +5,100 @@
     <title>WebScraper</title>
 
     <style>
+        /* ---------- THEME VARIABLES ---------- */
+        :root {
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --nav-bg: #0d6efd;
+            --nav-text: #ffffff;
+            --heading: #0d6efd;
+            --text: #111827;
+            --input-bg: #ffffff;
+            --input-border: #cbd5e1;
+            --button-bg: #0d6efd;
+            --button-bg-hover: #005be0;
+            --button-text: #ffffff;
+            --links-bg: #f8fafc;
+            --links-border: #e2e8f0;
+            --link-color: #0d6efd;
+            --shadow-soft: 0 6px 20px rgba(0,0,0,0.10);
+            --shadow-strong: 0 4px 10px rgba(0,0,0,0.20);
+        }
+
+        [data-theme="dark"] {
+            --bg: #020617;
+            --card-bg: #020617;
+            --nav-bg: #020617;
+            --nav-text: #e5e7eb;
+            --heading: #60a5fa;
+            --text: #e5e7eb;
+            --input-bg: #020617;
+            --input-border: #1f2937;
+            --button-bg: #2563eb;
+            --button-bg-hover: #1d4ed8;
+            --button-text: #f9fafb;
+            --links-bg: #020617;
+            --links-border: #1f2937;
+            --link-color: #60a5fa;
+            --shadow-soft: 0 6px 20px rgba(15,23,42,0.7);
+            --shadow-strong: 0 4px 10px rgba(15,23,42,0.9);
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: "Segoe UI", sans-serif;
-            background: #f1f5f9;
+            background: var(--bg);
+            color: var(--text);
         }
 
-        /* Top Blue Navbar */
+        /* Top Navbar */
         .navbar {
             width: 100%;
-            background: #0d6efd;
+            background: var(--nav-bg);
             padding: 16px 20px;
             font-size: 22px;
-            color: white;
+            color: var(--nav-text);
             font-weight: bold;
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            letter-spacing: 0.03em;
+        }
+
+        .theme-toggle {
+            border: none;
+            background: transparent;
+            color: var(--nav-text);
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle span {
+            font-size: 20px;
         }
 
         /* Main card */
         .container {
             max-width: 900px;
             margin: 24px auto;
-            background: #ffffff;
-            padding: 20px 16px;
+            background: var(--card-bg);
+            padding: 32px;
             border-radius: 18px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+            box-shadow: var(--shadow-soft);
         }
-
 
         h1 {
             text-align: center;
             margin-top: 0;
-            color: #0d6efd;
+            color: var(--heading);
             font-size: 32px;
         }
 
@@ -45,15 +106,21 @@
             width: 100%;
             padding: 12px 14px;
             border-radius: 8px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text);
             font-size: 16px;
             margin-bottom: 12px;
         }
 
+        input::placeholder {
+            color: #9ca3af;
+        }
+
         button {
             width: 100%;
-            background: #0d6efd;
-            color: white;
+            background: var(--button-bg);
+            color: var(--button-text);
             padding: 12px;
             font-size: 17px;
             border: none;
@@ -63,7 +130,7 @@
         }
 
         button:hover {
-            background: #005be0;
+            background: var(--button-bg-hover);
         }
 
         .section {
@@ -80,34 +147,49 @@
             flex-wrap: wrap;
             gap: 8px;
         }
+
         #images img {
-            width: 160px;
-            height: 110px;
+            width: 150px;
+            height: 100px;
             border-radius: 10px;
             object-fit: cover;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.20);
+            box-shadow: var(--shadow-strong);
         }
 
+        /* Scrollable Links Box */
         #links {
             max-height: 200px;
             overflow-y: auto;
-            background: #f8fafc;
+            background: var(--links-bg);
             padding: 12px;
             border-radius: 10px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--links-border);
+        }
+
+        #links a {
+            display: block;
+            margin: 6px 0;
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        #links a:hover {
+            text-decoration: underline;
         }
 
         /* Videos */
         #videos iframe,
         #videos video {
-            width: 100%;
-            max-width: 320px;
+            width: 300px;
             height: 180px;
-            margin: 8px 0;
+            margin: 8px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.20);
+            box-shadow: var(--shadow-strong);
         }
 
+        /* ---------- MOBILE ---------- */
         @media (max-width: 640px) {
             .navbar {
                 padding: 12px 16px;
@@ -122,7 +204,8 @@
             }
 
             h1 {
-                font-size: 24px;
+                font-size: 22px;
+                text-align: center;
             }
 
             input {
@@ -133,20 +216,46 @@
                 font-size: 15px;
             }
 
+            /* Images: 2 per row */
+            #images {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
             #images img {
                 width: 100%;
                 height: auto;
             }
 
             #links {
-                max-height: 160px;
+                max-height: 180px;
+                font-size: 13px;
+                line-height: 1.4;
+            }
+
+            #links a {
+                margin: 4px 0;
+            }
+
+            #videos iframe,
+            #videos video {
+                width: 100%;
+                max-width: 100%;
+                height: 190px;
+                margin: 8px 0;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="navbar">WebScraper</div>
+<div class="navbar">
+    <div class="brand">WebScraper</div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <span id="theme-icon">🌙</span>
+    </button>
+</div>
 
 <div class="container">
     <h1>Web Content Extractor</h1>
@@ -171,6 +280,32 @@
 </div>
 
 <script>
+    // ---------- THEME TOGGLE ----------
+    function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+        const icon = document.getElementById("theme-icon");
+        icon.textContent = theme === "dark" ? "☀️" : "🌙";
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute("data-theme") || "light";
+        applyTheme(current === "light" ? "dark" : "light");
+    }
+
+    // On load, use saved theme or system preference
+    (function initTheme() {
+        const saved = localStorage.getItem("theme");
+        if (saved) {
+            applyTheme(saved);
+        } else {
+            const prefersDark = window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches;
+            applyTheme(prefersDark ? "dark" : "light");
+        }
+    })();
+
+    // ---------- SCRAPE FUNCTION ----------
     async function scrape() {
         const url = document.getElementById("urlInput").value.trim();
         if (!url) {
@@ -180,49 +315,64 @@
 
         const apiUrl = "/api/scrape?url=" + encodeURIComponent(url);
 
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        // Clear old content
-        document.getElementById("images").innerHTML = "";
-        document.getElementById("links").innerHTML = "";
-        document.getElementById("videos").innerHTML = "";
-
-        // IMAGES
-        data.images?.forEach(imgUrl => {
-            const img = document.createElement("img");
-            img.src = imgUrl;
-            document.getElementById("images").appendChild(img);
-        });
-
-        // LINKS
-        data.links?.forEach(link => {
-            const a = document.createElement("a");
-            a.href = link;
-            a.target = "_blank";
-            a.textContent = link;
-            document.getElementById("links").appendChild(a);
-        });
-
-        // VIDEOS
-        data.videos?.forEach(v => {
-
-            // YouTube embed
-            if (v.includes("youtube.com/embed")) {
-                const iframe = document.createElement("iframe");
-                iframe.src = v;
-                iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
-                iframe.allowFullscreen = true;
-                document.getElementById("videos").appendChild(iframe);
-
-                // Direct MP4 file
-            } else if (v.endsWith(".mp4") || v.endsWith(".webm")) {
-                const video = document.createElement("video");
-                video.src = v;
-                video.controls = true;
-                document.getElementById("videos").appendChild(video);
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                alert("Error: " + response.status + " " + response.statusText);
+                return;
             }
-        });
+            const data = await response.json();
+
+            // Clear old content
+            document.getElementById("images").innerHTML = "";
+            document.getElementById("links").innerHTML = "";
+            document.getElementById("videos").innerHTML = "";
+
+            // IMAGES
+            if (Array.isArray(data.images)) {
+                data.images.forEach(imgUrl => {
+                    const img = document.createElement("img");
+                    img.src = imgUrl;
+                    document.getElementById("images").appendChild(img);
+                });
+            }
+
+            // LINKS
+            if (Array.isArray(data.links)) {
+                data.links.forEach(link => {
+                    const a = document.createElement("a");
+                    a.href = link;
+                    a.target = "_blank";
+                    a.textContent = link;
+                    document.getElementById("links").appendChild(a);
+                });
+            }
+
+            // VIDEOS
+            if (Array.isArray(data.videos)) {
+                data.videos.forEach(v => {
+                    // YouTube embed
+                    if (v.includes("youtube.com/embed")) {
+                        const iframe = document.createElement("iframe");
+                        iframe.src = v;
+                        iframe.allow =
+                            "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+                        iframe.allowFullscreen = true;
+                        document.getElementById("videos").appendChild(iframe);
+
+                        // Direct MP4/WebM file
+                    } else if (v.endsWith(".mp4") || v.endsWith(".webm")) {
+                        const video = document.createElement("video");
+                        video.src = v;
+                        video.controls = true;
+                        document.getElementById("videos").appendChild(video);
+                    }
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error: " + err.message);
+        }
     }
 </script>
 
