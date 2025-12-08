@@ -1,242 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Web Scraper</title>
+    <meta charset="UTF-8">
+    <title>WebScraper</title>
+
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #f3f4f6;
             margin: 0;
-            padding: 40px 16px;
-            display: flex;
-            justify-content: center;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #f1f5f9;
         }
 
-        .container {
+        /* Top Blue Navbar */
+        .navbar {
             width: 100%;
-            max-width: 1100px;
+            background: #0d6efd;
+            padding: 18px 32px;
+            font-size: 26px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        /* Main card */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
             background: #ffffff;
-            border-radius: 16px;
-            padding: 24px 32px 32px;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+            padding: 32px;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.10);
         }
 
         h1 {
             text-align: center;
             margin-top: 0;
-            margin-bottom: 24px;
+            color: #0d6efd;
             font-size: 32px;
-            letter-spacing: 0.03em;
         }
 
-        .search-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .search-row input[type="text"] {
-            flex: 1;
-            padding: 10px 12px;
+        input {
+            width: 100%;
+            padding: 12px 14px;
             border-radius: 8px;
-            border: 1px solid #d1d5db;
-            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            font-size: 16px;
+            margin-bottom: 12px;
         }
 
-        .search-row button {
-            padding: 10px 18px;
-            border-radius: 8px;
+        button {
+            width: 100%;
+            background: #0d6efd;
+            color: white;
+            padding: 12px;
+            font-size: 17px;
             border: none;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.15s ease, transform 0.05s ease;
+            font-weight: 600;
         }
 
-        .search-row button:hover {
-            background: #1d4ed8;
-        }
-
-        .search-row button:active {
-            transform: scale(0.97);
-        }
-
-        #status {
-            min-height: 20px;
-            font-size: 14px;
-            color: #4b5563;
-            margin-bottom: 8px;
+        button:hover {
+            background: #005be0;
         }
 
         .section {
-            margin-top: 16px;
-            padding-top: 8px;
-            border-top: 1px solid #e5e7eb;
+            margin-top: 20px;
         }
 
-        .section h2 {
-            margin: 8px 0 12px;
-            font-size: 20px;
+        h2 {
+            margin-bottom: 10px;
         }
 
-        .images,
-        .videos {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .images img {
-            width: 160px;
-            height: 110px;
-            object-fit: cover;
+        /* Images grid */
+        #images img {
+            width: 150px;
+            height: 100px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+            object-fit: cover;
+            margin: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.20);
         }
 
-        .links a {
+        /* Scrollable Links Box */
+        #links {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        #links a {
             display: block;
-            margin-bottom: 4px;
-            font-size: 14px;
-            color: #2563eb;
+            margin: 6px 0;
+            color: #0d6efd;
             text-decoration: none;
+            font-size: 14px;
             word-break: break-all;
         }
 
-        .links a:hover {
+        #links a:hover {
             text-decoration: underline;
         }
 
-        video,
-        iframe {
-            border-radius: 12px;
-            max-width: 360px;
-            width: 100%;
-            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+        /* Videos */
+        #videos iframe,
+        #videos video {
+            width: 300px;
+            height: 180px;
+            margin: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.20);
         }
     </style>
 </head>
-
 <body>
+
+<div class="navbar">WebScraper</div>
+
 <div class="container">
-    <h1>Web Scraper</h1>
+    <h1>Web Content Extractor</h1>
 
-    <div class="search-row">
-        <input id="urlInput" type="text" placeholder="Enter a URL to scrape" />
-        <button onclick="scrape()">Scrape</button>
-    </div>
-
-    <div id="status"></div>
+    <input id="urlInput" type="text" placeholder="Enter website URL (e.g., https://example.com)">
+    <button onclick="scrape()">Scrape Website</button>
 
     <div class="section">
         <h2>Images</h2>
-        <div id="images" class="images"></div>
+        <div id="images"></div>
     </div>
 
     <div class="section">
         <h2>Links</h2>
-        <div id="links" class="links"></div>
+        <div id="links"></div>
     </div>
 
     <div class="section">
         <h2>Videos</h2>
-        <div id="videos" class="videos"></div>
+        <div id="videos"></div>
     </div>
 </div>
 
 <script>
     async function scrape() {
-        const url = document.getElementById('urlInput').value.trim();
-        const statusEl = document.getElementById('status');
-        const imagesEl = document.getElementById('images');
-        const linksEl = document.getElementById('links');
-        const videosEl = document.getElementById('videos');
-
+        const url = document.getElementById("urlInput").value.trim();
         if (!url) {
-            statusEl.textContent = 'Please enter a URL.';
+            alert("Please enter a URL!");
             return;
         }
 
-        statusEl.textContent = 'Scraping...';
-        imagesEl.innerHTML = '';
-        linksEl.innerHTML = '';
-        videosEl.innerHTML = '';
+        const apiUrl = "/api/scrape?url=" + encodeURIComponent(url);
 
-        try {
-            const res = await fetch('/api/scrape?url=' + encodeURIComponent(url));
-            if (!res.ok) {
-                statusEl.textContent = 'Error: ' + res.status + ' ' + res.statusText;
-                return;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        // Clear old content
+        document.getElementById("images").innerHTML = "";
+        document.getElementById("links").innerHTML = "";
+        document.getElementById("videos").innerHTML = "";
+
+        // IMAGES
+        data.images?.forEach(imgUrl => {
+            const img = document.createElement("img");
+            img.src = imgUrl;
+            document.getElementById("images").appendChild(img);
+        });
+
+        // LINKS
+        data.links?.forEach(link => {
+            const a = document.createElement("a");
+            a.href = link;
+            a.target = "_blank";
+            a.textContent = link;
+            document.getElementById("links").appendChild(a);
+        });
+
+        // VIDEOS
+        data.videos?.forEach(v => {
+
+            // YouTube embed
+            if (v.includes("youtube.com/embed")) {
+                const iframe = document.createElement("iframe");
+                iframe.src = v;
+                iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+                iframe.allowFullscreen = true;
+                document.getElementById("videos").appendChild(iframe);
+
+                // Direct MP4 file
+            } else if (v.endsWith(".mp4") || v.endsWith(".webm")) {
+                const video = document.createElement("video");
+                video.src = v;
+                video.controls = true;
+                document.getElementById("videos").appendChild(video);
             }
-            const data = await res.json();
-            statusEl.textContent = 'Scrape complete.';
-
-            // Images
-            if (Array.isArray(data.images)) {
-                data.images.forEach(src => {
-                    const img = document.createElement('img');
-                    img.src = src;
-                    imagesEl.appendChild(img);
-                });
-            }
-
-            // Links
-            if (Array.isArray(data.links)) {
-                data.links.forEach(href => {
-                    const a = document.createElement('a');
-                    a.href = href;
-                    a.target = '_blank';
-                    a.textContent = href;
-                    linksEl.appendChild(a);
-                });
-            }
-            // Videos
-            if (Array.isArray(data.videos)) {
-                data.videos.forEach(v => {
-                    // YouTube embeds
-                    if (v.includes("youtube.com/embed")) {
-                        const iframe = document.createElement("iframe");
-                        iframe.src = v;
-                        iframe.width = "400";
-                        iframe.height = "225";
-                        iframe.allow =
-                            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-                        iframe.allowFullscreen = true;
-                        iframe.style.margin = "8px";
-                        videosEl.appendChild(iframe);
-
-                        // Direct video files (.mp4, .webm, .ogg)
-                    } else if (/\.(mp4|webm|ogg)(\?|$)/i.test(v)) {
-                        const video = document.createElement("video");
-                        video.src = v;
-                        video.controls = true;
-                        video.preload = "metadata";
-                        video.style.maxWidth = "400px";
-                        video.style.margin = "8px";
-                        videosEl.appendChild(video);
-
-                        // Fallback: unknown type → show as link
-                    } else {
-                        const link = document.createElement("a");
-                        link.href = v;
-                        link.target = "_blank";
-                        link.textContent = v;
-                        link.style.display = "block";
-                        link.style.margin = "8px 0";
-                        videosEl.appendChild(link);
-                    }
-                });
-            }
-        } catch (err) {
-            console.error(err);
-            statusEl.textContent = 'Error: ' + err.message;
-        }
+        });
     }
 </script>
 
