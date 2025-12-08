@@ -20,10 +20,15 @@ public class ScrapeController {
         return scrapeService.WebScrape(url);
     }
 
-    @GetMapping("/")
-    public String home() {
+//    @GetMapping("/")
+//    public String home() {
+//        return "Web Scraper is running. Use /api/scrape?url=...";
+//    }
+
+    @GetMapping("/status")
+    @ResponseBody
+    public String status() {
         return "Web Scraper is running. Use /api/scrape?url=...";
     }
-
 
 }
