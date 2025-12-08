@@ -26,7 +26,6 @@ public class ScrapeController {
 //    }
 
     @GetMapping("/status")
-    @ResponseBody
     public String status() {
         return "Web Scraper is running. Use /api/scrape?url=...";
     }
