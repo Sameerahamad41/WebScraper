@@ -4,39 +4,150 @@
     <meta charset="UTF-8" />
     <title>Web Scraper</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 900px; margin: 20px auto; }
-        h1 { text-align: center; }
-        input[type="text"] { width: 70%; padding: 8px; }
-        button { padding: 8px 16px; cursor: pointer; }
-        .section { margin-top: 20px; }
-        .images img { max-width: 150px; max-height: 100px; margin: 4px; object-fit: cover; }
-        .links a { display: block; margin: 3px 0; word-break: break-all; }
-        video { max-width: 300px; margin: 5px; display: block; }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 40px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px 32px 32px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-size: 32px;
+            letter-spacing: 0.03em;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .search-row input[type="text"] {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+        }
+
+        .search-row button {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.05s ease;
+        }
+
+        .search-row button:hover {
+            background: #1d4ed8;
+        }
+
+        .search-row button:active {
+            transform: scale(0.97);
+        }
+
+        #status {
+            min-height: 20px;
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 8px;
+        }
+
+        .section {
+            margin-top: 16px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .section h2 {
+            margin: 8px 0 12px;
+            font-size: 20px;
+        }
+
+        .images,
+        .videos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .images img {
+            width: 160px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+        }
+
+        .links a {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: #2563eb;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        video,
+        iframe {
+            border-radius: 12px;
+            max-width: 360px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+        }
     </style>
 </head>
+
 <body>
-<h1>Web Scraper</h1>
+<div class="container">
+    <h1>Web Scraper</h1>
 
-<div>
-    <input id="urlInput" type="text" placeholder="Enter a URL to scrape" />
-    <button onclick="scrape()">Scrape</button>
-</div>
+    <div class="search-row">
+        <input id="urlInput" type="text" placeholder="Enter a URL to scrape" />
+        <button onclick="scrape()">Scrape</button>
+    </div>
 
-<div id="status" class="section"></div>
+    <div id="status"></div>
 
-<div class="section">
-    <h2>Images</h2>
-    <div id="images" class="images"></div>
-</div>
+    <div class="section">
+        <h2>Images</h2>
+        <div id="images" class="images"></div>
+    </div>
 
-<div class="section">
-    <h2>Links</h2>
-    <div id="links" class="links"></div>
-</div>
+    <div class="section">
+        <h2>Links</h2>
+        <div id="links" class="links"></div>
+    </div>
 
-<div class="section">
-    <h2>Videos</h2>
-    <div id="videos" class="videos"></div>
+    <div class="section">
+        <h2>Videos</h2>
+        <div id="videos" class="videos"></div>
+    </div>
 </div>
 
 <script>
@@ -128,5 +239,6 @@
         }
     }
 </script>
+
 </body>
 </html>
